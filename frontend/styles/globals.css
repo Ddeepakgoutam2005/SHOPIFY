@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer utilities {
+  .animate-fade-in { animation: fadeIn 0.6s ease-out both; }
+  .hover-lift { transition: transform 200ms, box-shadow 200ms; }
+  .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+  .btn { @apply inline-flex items-center justify-center rounded-lg border px-4 py-2 font-medium transition-colors; }
+  .btn-primary { @apply bg-gray-900 text-white border-gray-900; }
+  .btn-primary:hover { @apply bg-white text-gray-900; border-color: #111827; }
+  .btn-secondary { @apply bg-white text-gray-900 border-gray-300; }
+  .btn-secondary:hover { @apply bg-gray-50; border-color: #111827; }
+  .hero { @apply rounded-2xl border bg-white shadow-sm overflow-hidden; }
+  .hero-gradient { background: radial-gradient(1200px 400px at 100% 0%, rgba(37,99,235,0.08) 0%, rgba(0,0,0,0) 60%), radial-gradient(800px 300px at 0% 100%, rgba(16,185,129,0.08) 0%, rgba(0,0,0,0) 60%); }
+}
+
+a { transition: color 150ms ease; }
+a:hover { color: #111827; }
+
+.site-bg {
+  min-height: 100vh;
+  background: radial-gradient(800px 300px at 100% 0%, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0) 60%), linear-gradient(180deg, #f3f4f6, #e5e7eb);
+}

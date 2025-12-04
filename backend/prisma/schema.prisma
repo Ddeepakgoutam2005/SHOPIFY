@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  users     User[]
+  stores    Store[]
+  customers Customer[]
+  products  Product[]
+  orders    Order[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  tenantId     String
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  @@index([tenantId])
+}
+
+model Store {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  shopDomain  String
+  accessToken String
+  lastSyncAt  DateTime?
+  createdAt   DateTime @default(now())
+  @@unique([shopDomain, tenantId], name: "shopDomain_tenantId")
+  @@index([tenantId])
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  shopifyId  String
+  email      String
+  firstName  String
+  lastName   String
+  totalSpent Float    @default(0)
+  createdAt  DateTime
+  updatedAt  DateTime
+  orders     Order[]
+  @@unique([shopifyId, tenantId], name: "shopifyId_tenantId")
+  @@index([tenantId])
+  @@index([tenantId, updatedAt])
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  shopifyId String
+  title     String
+  sku       String
+  price     Float    @default(0)
+  createdAt DateTime
+  updatedAt DateTime
+  @@unique([shopifyId, tenantId], name: "shopifyId_tenantId")
+  @@index([tenantId])
+  @@index([tenantId, updatedAt])
+}
+
+model Order {
+  id         String    @id @default(cuid())
+  tenantId   String
+  tenant     Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  shopifyId  String
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  totalPrice Float     @default(0)
+  currency   String
+  createdAt  DateTime
+  updatedAt  DateTime
+  @@unique([shopifyId, tenantId], name: "shopifyId_tenantId")
+  @@index([tenantId])
+  @@index([tenantId, createdAt])
+}

@@ -1,0 +1,31 @@
+{
+  "name": "shopify-mt-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "lint": "eslint .",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "axios": "^1.7.7",
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.5",
+    "crypto-js": "4.2.0",
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
+    "helmet": "7.1.0",
+    "jsonwebtoken": "9.0.2",
+    "node-cron": "3.0.3",
+    "pino": "9.4.0"
+  },
+  "devDependencies": {
+    "eslint": "9.14.0",
+    "prisma": "5.18.0"
+  }
+}
