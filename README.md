@@ -297,10 +297,16 @@ npm run lint
 - Deployment provider configs removed for local dev clarity (Render/Vercel). Add your own infra configs if you plan to deploy.
 
 Implements the scope of the Xeno FDE Internship Assignment 2025: multi-tenant Shopify analytics with onboarding, secure webhooks, sync, and dashboard insights.
-#   S H O P I F Y  
- #   S H O P I F Y  
- #   S H O P I F Y  
- #   S H O P I F Y  
- #   S H O P I F Y  
- #   S H O P I F Y  
+#   S H O P I F Y 
+ 
+ #   S H O P I F Y 
+ 
+ #   S H O P I F Y 
+ 
+ #   S H O P I F Y 
+ 
+ #   S H O P I F Y 
+ 
+ #   S H O P I F Y 
+ 
  
