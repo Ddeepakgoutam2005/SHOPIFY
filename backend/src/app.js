@@ -1,28 +1,31 @@
 import express from "express";
-import helmet from "helmet";
 import cors from "cors";
-import { env } from "./config/env.js";
 import authRoutes from "./routes/auth.js";
-import onboardRoutes from "./routes/onboard.js";
-import metricsRoutes from "./routes/metrics.js";
-import ordersRoutes from "./routes/orders.js";
-import customersRoutes from "./routes/customers.js";
-import syncRoutes from "./routes/sync.js";
-import webhookRoutes from "./routes/webhooks.js";
-import { errorHandler } from "./middleware/error.js";
 
 const app = express();
-app.use(helmet());
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
-app.use(express.json({ type: "*/*", verify: (req, _res, buf) => ((req).rawBody = buf.toString()) }));
 
+// --- CORS CONFIG ---
+app.use(cors({
+  origin: "https://shopify-pi-five.vercel.app",  // your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
+
+// --- BODY PARSER ---
+app.use(express.json());
+
+// --- REQUEST LOGGER ---
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`, req.body);
+  next();
+});
+
+// --- ROUTES ---
 app.use("/api/auth", authRoutes);
-app.use("/api/onboard", onboardRoutes);
-app.use("/api/metrics", metricsRoutes);
-app.use("/api/orders", ordersRoutes);
-app.use("/api/customers", customersRoutes);
-app.use("/api/sync", syncRoutes);
-app.use("/api/webhooks", webhookRoutes);
 
-app.use(errorHandler);
+// --- HEALTH CHECK ---
+app.get("/", (req, res) => {
+  res.send("Backend running 🚀");
+});
+
 export default app;
